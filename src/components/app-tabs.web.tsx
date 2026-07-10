@@ -21,11 +21,20 @@ export default function AppTabs() {
       <TabSlot style={{ height: '100%' }} />
       <TabList asChild>
         <CustomTabList>
-          <TabTrigger name="home" href="/" asChild>
+          <TabTrigger name="home" href="/home" asChild>
             <TabButton>Home</TabButton>
           </TabTrigger>
-          <TabTrigger name="explore" href="/explore" asChild>
-            <TabButton>Explore</TabButton>
+          <TabTrigger name="calendar" href="/calendar" asChild>
+            <TabButton>Calendar</TabButton>
+          </TabTrigger>
+          <TabTrigger name="societies" href="/societies" asChild>
+            <TabButton>Societies</TabButton>
+          </TabTrigger>
+          <TabTrigger name="myplan" href="/myplan" asChild>
+            <TabButton>MyPlan</TabButton>
+          </TabTrigger>
+          <TabTrigger name="courses" href="/courses" asChild>
+            <TabButton>Courses</TabButton>
           </TabTrigger>
         </CustomTabList>
       </TabList>
@@ -55,7 +64,7 @@ export function CustomTabList(props: TabListProps) {
     <View {...props} style={styles.tabListContainer}>
       <ThemedView type="backgroundElement" style={styles.innerContainer}>
         <ThemedText type="smallBold" style={styles.brandText}>
-          Expo Starter
+          ServiceUNSW
         </ThemedText>
 
         {props.children}
