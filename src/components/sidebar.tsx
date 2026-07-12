@@ -63,11 +63,6 @@ export default function Sidebar({
           />
 
           <MenuItem
-            title="Notifications"
-            route="/notifications"
-          />
-
-          <MenuItem
             title="Room Bookings"
             route="/bookings"
           />
