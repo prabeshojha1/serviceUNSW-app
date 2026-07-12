@@ -51,9 +51,11 @@ export default function Sidebar({
         ]}
       >
         <SafeAreaView style={styles.drawerSafeArea}>
-          <Text style={styles.title}>
-            ServiceUNSW
-          </Text>
+          <Pressable onPress={() => router.push("/home")}>
+            <Text style={styles.title}>
+              ServiceUNSW
+            </Text>
+          </Pressable>
 
           <MenuItem
             title="Calendar"
