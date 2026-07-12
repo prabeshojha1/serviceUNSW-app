@@ -53,15 +53,21 @@ export default function HomeScreen() {
             </Text>
 
             <Text style={styles.subGreeting}>
-              [Today's Date]
+              {new Date().toLocaleDateString("en-AU", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </Text>
 
             {/* Calendar */}
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>
-                [Today's Date]
+                Next 3 Hours
               </Text>
 
+              {/* TODO: sync with calendar */}
               <View style={styles.timelineCard}>
                 <TimelineItem
                   time="10:00"
@@ -119,7 +125,7 @@ export default function HomeScreen() {
         </View>
       </SafeAreaView>
     </View>
-);
+  );
 }
 
 function TimelineItem({
@@ -226,6 +232,7 @@ const styles = StyleSheet.create({
   subGreeting: {
     fontSize: 16,
     color: "#777",
+    marginTop: 6,
     marginBottom: 24,
   },
 
