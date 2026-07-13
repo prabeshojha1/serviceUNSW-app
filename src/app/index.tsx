@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -51,7 +52,7 @@ export default function LoginScreen() {
               <Text style={styles.unswButtonText}>Login with UNSW</Text>
             </Pressable>
 
-            <Pressable style={({ pressed }) => [styles.guestButton, pressed && styles.pressed]}>
+            <Pressable onPress={() => router.push("/course-search")} style={({ pressed }) => [styles.guestButton, pressed && styles.pressed]}>
               <Text style={styles.guestButtonText}>Login as Guest</Text>
             </Pressable>
 
