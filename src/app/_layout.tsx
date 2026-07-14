@@ -1,26 +1,24 @@
+import '../global.css'; 
 import React from 'react';
-import { useColorScheme } from 'react-native';
-import { ThemeProvider, DarkTheme, DefaultTheme, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { Users, Calendar } from 'lucide-react-native';
 
-// Mock placeholders for missing global structural wrappers seen in your screenshot
-const AnimatedSplashOverlay = () => null; 
+// Mock placeholders for missing global structural wrappers
+const AnimatedSplashOverlay = () => null;
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <>
       <AnimatedSplashOverlay />
       
       <Tabs 
         screenOptions={{ 
-          tabBarActiveTintColor: '#eab308', 
+          tabBarActiveTintColor: '#FFDC00', // Using your primary yellow
           tabBarStyle: { backgroundColor: '#ffffff' },
           headerShown: false // Keeps navigation bars clean
         }}
       >
-        {/* 1. Societies Directory Tab */}
+        {/* --- VISIBLE TABS --- */}
         <Tabs.Screen
           name="societies/index"
           options={{
@@ -29,16 +27,6 @@ export default function TabLayout() {
           }}
         />
         
-        {/* 2. Hidden Profile Sub-Route */}
-        <Tabs.Screen
-          name="societies/[id]"
-          options={{
-            href: null, // Hidden from navigation bar bottom tabs
-            title: "Profile",
-          }}
-        />
-        
-        {/* 3. Events Tab */}
         <Tabs.Screen
           name="events/index"
           options={{
@@ -46,7 +34,17 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <Calendar size={22} color={color} />,
           }}
         />
+
+        {/* --- HIDDEN SCREENS --- */}
+        <Tabs.Screen name="index" options={{ href: null }} />
+        <Tabs.Screen name="explore" options={{ href: null }} />
+        <Tabs.Screen name="societies/[id]" options={{ href: null }} />
+        <Tabs.Screen name="societies/EventDetails" options={{ href: null }} />
+        <Tabs.Screen name="societies/SocietyDirectory" options={{ href: null }} />
+        <Tabs.Screen name="societies/SocietyEvents" options={{ href: null }} />
+        <Tabs.Screen name="societies/SocietyProfile" options={{ href: null }} />
+        <Tabs.Screen name="societies/subscribed" options={{ href: null }} />
       </Tabs>
-    </ThemeProvider>
+    </>
   );
 }
