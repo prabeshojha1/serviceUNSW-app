@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -44,9 +45,9 @@ export default function LoginScreen() {
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Login</Text>
 
-            <Pressable 
-              onPress={() => router.replace('/home')}
-              style={({ pressed }) => [styles.unswButton, pressed && styles.pressed]}>
+<Pressable 
+  onPress={() => router.replace('/home')}
+  style={({ pressed }) => [styles.unswButton, pressed && styles.pressed]}>
               <View style={styles.unswButtonLogo}>
                 <CrestMark compact />
                 <Text style={styles.unswSydney}>UNSW{"\n"}SYDNEY</Text>
@@ -54,9 +55,11 @@ export default function LoginScreen() {
               <Text style={styles.unswButtonText}>Login with UNSW</Text>
             </Pressable>
 
-            <Pressable 
+<Pressable 
               onPress={() => router.replace('/home')}
               style={({ pressed }) => [styles.guestButton, pressed && styles.pressed]}>
+              <Text style={styles.guestButtonText}>Login as Guest</Text>
+            </Pressable>
               <Text style={styles.guestButtonText}>Login as Guest</Text>
             </Pressable>
 

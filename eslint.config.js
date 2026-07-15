@@ -7,4 +7,11 @@ module.exports = defineConfig([
   {
     ignores: ["dist/*"],
   }
+  },
+  {
+    files: ["src/hooks/use-color-scheme.web.ts"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
