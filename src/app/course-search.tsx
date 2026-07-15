@@ -1,176 +1,61 @@
-import { useState } from "react";
+import { router } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
-// import { Ionicons } from "@expo/vector-icons";
-
-import CourseCard from "../components/course-card";
-import { courses } from "../data/courses";
-import { Colours } from "../themes/colours";
+import CourseCard from '@/components/course-card';
+import { AppShell, PrimaryButton, palette, sharedStyles } from '@/components/plan-ui';
+import { courses } from '@/data/courses';
 
 export default function SearchScreen() {
-  const [search, setSearch] = useState("");
-
-  const filtered = courses.filter(course =>
-    `${course.code} ${course.title}`
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  const [search, setSearch] = useState('');
+  const filtered = courses.filter((course) => `${course.code} ${course.title}`.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.logo}>UNSW</Text>
-
-        <TouchableOpacity>
-          {/* <Ionicons
-            name="notifications-outline"
-            size={24}
-          /> */}
-        </TouchableOpacity>
-      </View>
-
-      <Text style={styles.title}>
-        Course Search
-      </Text>
-
+    <AppShell
+      title="Course search"
+      eyebrow="Catalogue"
+      action={<PrimaryButton label="Add to MyPlan" onPress={() => router.push('/add-course')} compact />}>
       <View style={styles.searchBar}>
-        {/* <Ionicons
-          name="search"
-          size={20}
-          color="#777"
-        /> */}
-
+        <Text style={styles.searchIcon}>⌕</Text>
         <TextInput
-          placeholder="Search courses..."
+          placeholder="Search by course code or title…"
+          placeholderTextColor="#777770"
           value={search}
           onChangeText={setSearch}
           style={styles.input}
         />
-
-        {/* <Ionicons
-          name="options-outline"
-          size={22}
-        /> */}
       </View>
 
-      <Text style={styles.heading}>
-        Popular Searches
-      </Text>
-
+      <Text style={styles.heading}>Popular searches</Text>
       <View style={styles.popularRow}>
-        {[
-          "COMP1511",
-          "COMP2521",
-          "COMP1531",
-          "MATH1081",
-        ].map(course => (
-          <TouchableOpacity
-            key={course}
-            style={styles.popularChip}
-          >
-            <Text>{course}</Text>
-          </TouchableOpacity>
+        {['COMP1511', 'COMP2521', 'COMP1531', 'MATH1081'].map((code) => (
+          <Pressable key={code} onPress={() => setSearch(code)} style={styles.popularChip}>
+            <Text style={styles.popularText}>{code}</Text>
+          </Pressable>
         ))}
       </View>
 
-      <Text style={styles.heading}>
-        Recommended
-      </Text>
-
-      <FlatList
-        data={filtered}
-        keyExtractor={item => item.code}
-        renderItem={({ item }) => (
-          <CourseCard
-            course={item}
-            onPress={() => {}}
-          />
-        )}
-        showsVerticalScrollIndicator={false}
-      />
-    </SafeAreaView>
+      <View style={sharedStyles.sectionHeader}>
+        <View>
+          <Text style={sharedStyles.sectionTitle}>{search ? 'Search results' : 'Recommended'}</Text>
+          <Text style={sharedStyles.sectionCaption}>{filtered.length} courses</Text>
+        </View>
+      </View>
+      <View>
+        {filtered.map((course) => (
+          <CourseCard key={course.code} course={course} onPress={() => router.push(`/course-detail/${course.code}`)} />
+        ))}
+      </View>
+    </AppShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colours.background,
-    paddingHorizontal: 20,
-  },
-
-  header: {
-    backgroundColor: Colours.primary,
-    marginHorizontal: -20,
-    paddingHorizontal: 20,
-    paddingVertical: 18,
-
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
-  logo: {
-    fontWeight: "700",
-    fontSize: 26,
-  },
-
-  title: {
-    marginTop: 25,
-    fontSize: 30,
-    fontWeight: "700",
-  },
-
-  searchBar: {
-    marginTop: 20,
-
-    flexDirection: "row",
-    alignItems: "center",
-
-    backgroundColor: "white",
-
-    borderRadius: 14,
-
-    paddingHorizontal: 16,
-
-    height: 55,
-  },
-
-  input: {
-    flex: 1,
-    marginLeft: 12,
-  },
-
-  heading: {
-    fontWeight: "700",
-    fontSize: 18,
-    marginTop: 30,
-    marginBottom: 15,
-  },
-
-  popularRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginBottom: 15,
-  },
-
-  popularChip: {
-    backgroundColor: "white",
-    borderRadius: 30,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: Colours.border,
-  },
+  searchBar: { marginTop: 18, flexDirection: 'row', alignItems: 'center', backgroundColor: palette.card, borderWidth: 1, borderColor: palette.line, borderRadius: 14, paddingHorizontal: 16, minHeight: 55 },
+  searchIcon: { color: palette.muted, fontSize: 22, marginRight: 10 },
+  input: { flex: 1, color: palette.ink, fontSize: 15, paddingVertical: 12 },
+  heading: { color: palette.ink, fontWeight: '800', fontSize: 16, marginTop: 24, marginBottom: 12 },
+  popularRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 26 },
+  popularChip: { backgroundColor: palette.card, borderRadius: 22, paddingHorizontal: 14, paddingVertical: 9, borderWidth: 1, borderColor: palette.line },
+  popularText: { color: palette.blue, fontSize: 12, fontWeight: '800' },
 });
