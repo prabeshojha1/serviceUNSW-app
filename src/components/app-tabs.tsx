@@ -36,7 +36,7 @@ export default function AppTabs() {
         />
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="myplan">
+      <NativeTabs.Trigger name="my-plan">
         <NativeTabs.Trigger.Label>MyPlan</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
           src={require('@/assets/images/tabIcons/home.png')}
@@ -44,7 +44,7 @@ export default function AppTabs() {
         />
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="courses">
+      <NativeTabs.Trigger name="course-search">
         <NativeTabs.Trigger.Label>Courses</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
           src={require('@/assets/images/tabIcons/explore.png')}

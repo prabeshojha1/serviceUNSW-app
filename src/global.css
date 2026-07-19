@@ -1,7 +1,6 @@
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css";
-@import "nativewind/theme";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --font-display:
@@ -11,15 +10,4 @@
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
   --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
-}
-
-@theme {
-  --color-unsw-yellow: #ffe600;
-  --color-unsw-gold: #ffd200;
-  --color-unsw-red: #e1251b;
-  --color-primary: #000000;
-  --color-accent-blue: #0066cc;
-  --color-accent-pink: #e91e63;
-  --color-accent-green: #2ecc71;
-  --color-accent-purple: #8e44ad;
 }

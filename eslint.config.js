@@ -6,7 +6,6 @@ module.exports = defineConfig([
   expoConfig,
   {
     ignores: ["dist/*"],
-  }
   },
   {
     files: ["src/hooks/use-color-scheme.web.ts"],

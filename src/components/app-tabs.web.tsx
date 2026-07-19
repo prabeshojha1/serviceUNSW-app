@@ -30,10 +30,10 @@ export default function AppTabs() {
           <TabTrigger name="societies" href="/societies" asChild>
             <TabButton>Societies</TabButton>
           </TabTrigger>
-          <TabTrigger name="myplan" href="/myplan" asChild>
+          <TabTrigger name="myplan" href="/my-plan" asChild>
             <TabButton>MyPlan</TabButton>
           </TabTrigger>
-          <TabTrigger name="courses" href="/courses" asChild>
+          <TabTrigger name="courses" href="/course-search" asChild>
             <TabButton>Courses</TabButton>
           </TabTrigger>
         </CustomTabList>
