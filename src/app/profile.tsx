@@ -1,133 +1,73 @@
-import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  ScrollView,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Sidebar from "../components/sidebar";
-import ProfileDrawer from "../components/profile-drawer";
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { Text, View } from 'react-native';
 
-const UNSW_YELLOW = "#FFE600";
+import { AppScreen, Button, Card, SectionHeader } from '@/components/ui/app-ui';
+import { colors } from '@/theme/tokens';
 
 export default function ProfileScreen() {
-  const [sidebarVisible, setSidebarVisible] =
-    useState(false);
-
-  const [profileVisible, setProfileVisible] =
-    useState(false);
-
   return (
-    <View style={styles.screen}>
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.content}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContent}
-          >
-            {/* Header */}
-            <View style={styles.topBar}>
+    <AppScreen back showProfile={false} subtitle="Account and preferences" title="Profile">
+      <View className="mx-auto w-full max-w-2xl gap-6">
+        <Card className="items-center p-6">
+          <View className="h-24 w-24 items-center justify-center rounded-full bg-brand">
+            <Text className="text-3xl font-black text-ink">PS</Text>
+          </View>
+          <Text className="mt-4 text-2xl font-black text-ink">Pat Student</Text>
+          <Text className="mt-1 text-sm text-muted">z5555555 · Bachelor of Computer Science</Text>
+        </Card>
 
-              <Pressable
-                onPress={() => setSidebarVisible(true)}
-              >
-                <Text style={styles.icon}>
-                  ☰
-                </Text>
-              </Pressable>
-
-              <Pressable
-                onPress={() => setProfileVisible(true)}
-              >
-                <Text style={styles.icon}>
-                  👤
-                </Text>
-              </Pressable>
-
-            </View>
-            <Text style={styles.title}>
-              Profile
-            </Text>
-
-            <View style={styles.card}>
-              <Text>Name: [Student Name]</Text>
-              <Text>zID: [z5555555]</Text>
-              <Text>Degree: [Degree]</Text>
-            </View>
-          </ScrollView>
-
-          <Sidebar
-            visible={sidebarVisible}
-            onClose={() => setSidebarVisible(false)}
-          />
-
-          <ProfileDrawer
-            visible={profileVisible}
-            onClose={() => setProfileVisible(false)}
-          />
+        <View>
+          <SectionHeader title="Student details" />
+          <Card className="p-0">
+            <ProfileRow icon="person-outline" label="Preferred name" value="Pat" />
+            <ProfileRow icon="id-card-outline" label="Student ID" value="z5555555" />
+            <ProfileRow icon="school-outline" label="Program" value="3778 · Computer Science" />
+            <ProfileRow icon="location-outline" label="Campus" value="Kensington" last />
+          </Card>
         </View>
-      </SafeAreaView>
-    </View>
+
+        <View>
+          <SectionHeader
+            description="Calendar reminders and society subscriptions are managed in their relevant sections."
+            title="Preferences"
+          />
+          <Card className="p-0">
+            <ProfileRow icon="notifications-outline" label="Notifications" value="Enabled" />
+            <ProfileRow icon="contrast-outline" label="Appearance" value="Light" last />
+          </Card>
+        </View>
+
+        <Button
+          fullWidth
+          icon="log-out-outline"
+          label="Log out"
+          onPress={() => router.replace('/')}
+          variant="danger"
+        />
+      </View>
+    </AppScreen>
   );
 }
 
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: UNSW_YELLOW,
-  },
-
-  safeArea: {
-    flex: 1,
-  },
-
-  content: {
-    flex: 1,
-    width: "100%",
-    maxWidth: 560,
-    alignSelf: "center",
-    backgroundColor: "#FAFAFA",
-    borderRadius: 32,
-    marginTop: 12,
-    marginHorizontal: 12,
-    overflow: "hidden",
-  },
-
-  scrollContent: {
-    paddingHorizontal: 30,
-    paddingTop: 20,
-    paddingBottom: 40,
-  },
-
-  topBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-    marginBottom: 20,
-  },
-
-  icon: {
-    fontSize: 30,
-  },
-
-  container: {
-    flex: 1,
-    backgroundColor: "#FFE600",
-    padding: 20,
-  },
-
-  title: {
-    fontSize: 32,
-    fontWeight: "600",
-    marginBottom: 20,
-  },
-
-  card: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 20,
-  },
-});
+function ProfileRow({
+  icon,
+  label,
+  value,
+  last = false,
+}: {
+  icon: React.ComponentProps<typeof Ionicons>['name'];
+  label: string;
+  value: string;
+  last?: boolean;
+}) {
+  return (
+    <View className={`min-h-16 flex-row items-center gap-3 px-4 ${last ? '' : 'border-b border-border'}`}>
+      <View className="h-10 w-10 items-center justify-center rounded-xl bg-surface-muted">
+        <Ionicons color={colors.ink} name={icon} size={20} />
+      </View>
+      <Text className="flex-1 text-sm font-bold text-ink">{label}</Text>
+      <Text className="max-w-[55%] text-right text-sm text-muted">{value}</Text>
+    </View>
+  );
+}

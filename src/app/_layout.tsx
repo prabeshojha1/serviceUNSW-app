@@ -1,19 +1,44 @@
 import '../global.css';
 
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { PlanProvider } from '@/context/plan-context';
+import { colors } from '@/theme/tokens';
+
+const appTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: colors.ink,
+    background: colors.canvas,
+    card: colors.surface,
+    text: colors.ink,
+    border: colors.border,
+    notification: colors.brand,
+  },
+};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={appTheme}>
       <PlanProvider>
-        <AnimatedSplashOverlay />
-        <Stack screenOptions={{ headerShown: false }} />
+        <StatusBar style="dark" />
+        <Stack
+          screenOptions={{
+            contentStyle: { backgroundColor: colors.canvas },
+            headerShown: false,
+          }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(app)" />
+          <Stack.Screen
+            name="profile"
+            options={{
+              animation: 'slide_from_bottom',
+              presentation: 'modal',
+            }}
+          />
+        </Stack>
       </PlanProvider>
     </ThemeProvider>
   );

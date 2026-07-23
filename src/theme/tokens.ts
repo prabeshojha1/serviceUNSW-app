@@ -1,0 +1,31 @@
+export const colors = {
+  brand: '#FFE600',
+  brandPressed: '#E6CF00',
+  brandSoft: '#FFF9C7',
+  ink: '#171717',
+  canvas: '#F5F5F2',
+  surface: '#FFFFFF',
+  surfaceMuted: '#ECECE7',
+  border: '#D9D9D2',
+  borderStrong: '#B8B8B0',
+  muted: '#666662',
+  link: '#145DA0',
+  info: '#145DA0',
+  success: '#1F6B45',
+  warning: '#8A4B00',
+  danger: '#A12B2B',
+  ai: '#6240A0',
+  eventClass: '#145DA0',
+  eventSociety: '#8A3A70',
+  eventDeadline: '#7A3E9D',
+  eventGeneral: '#4F5D63',
+  white: '#FFFFFF',
+  backdrop: 'rgba(23, 23, 23, 0.48)',
+} as const;
+
+export const layout = {
+  desktopNavigationBreakpoint: 1024,
+  desktopRailWidth: 224,
+  maxContentWidth: 1200,
+  mobileTabHeight: 64,
+} as const;
