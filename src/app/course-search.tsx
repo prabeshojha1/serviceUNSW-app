@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import CourseCard from '@/components/course-card';
 import { AppShell, PrimaryButton, palette, sharedStyles } from '@/components/plan-ui';
 import { courses } from '@/data/courses';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SearchScreen() {
   const [search, setSearch] = useState('');
@@ -23,6 +24,11 @@ export default function SearchScreen() {
           value={search}
           onChangeText={setSearch}
           style={styles.input}
+        />
+        <Ionicons
+          onPress={() => router.push("/course-search-filter")}
+          name="options-outline"
+          size={22}
         />
       </View>
 

@@ -51,6 +51,26 @@ export const catalogCourses: CatalogCourse[] = [
     terms: ['2026-t1', '2026-t3'], prerequisites: ['COMP1531'], interest: 'Web development',
     description: 'Modern browser programming, accessibility, interface architecture, and web application quality.',
   },
+  {
+    code: 'COMP2521', title: 'Data Structures and Algorithms', uoc: 6, 
+    terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1511'], interest: 'Data structures and algorithms',
+    description: 'Common data structures and algorithms used in the industry, help with thought process of a computer scientist.'
+  },
+  {
+    code: 'COMP1511', title: 'Programming Fundamentals', uoc: 6, 
+    terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: [], interest: 'Entry to programming',
+    description: 'Basics of programming, simple logic and data structures.'
+  },
+  {
+    code: 'COMP1531', title: 'Software Engineering Fundamentals', uoc: 6, 
+    terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1511'], interest: 'Group project',
+    description: 'Work on simple backend with a group to build on fundamentals and teamwork.'
+  },
+  {
+    code: 'MATH1081', title: 'Discrete Mathematics', uoc: 6, 
+    terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1511'], interest: 'Logic',
+    description: 'Using analytical problem solving and mathematical techniques to solve problems and explain ideas'
+  },
 ];
 
 export const initialPlanCourses: PlanCourse[] = [
