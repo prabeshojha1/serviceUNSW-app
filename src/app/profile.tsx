@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { Text, View } from 'react-native';
+import { Text, View } from '@/components/ui/native';
 
 import { AppScreen, Button, Card, SectionHeader } from '@/components/ui/app-ui';
 import { colors } from '@/theme/tokens';

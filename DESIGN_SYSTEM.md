@@ -36,7 +36,12 @@ Use the primitives exported by `src/components/ui/app-ui.tsx`:
 - `Button` and `IconButton` for actions; do not use a bare `Pressable` when one of these fits.
 - `Card`, `SectionHeader`, `SearchField`, `Chip`, `Badge`, and `ProgressBar` for common content.
 - `ModalSheet` for mobile sheets and desktop dialogs.
+- Use `ModalSheet` with `presentation="responsive-drawer"` for contextual editors that should
+  slide from the right on desktop and from the bottom on mobile.
 - `EmptyState`, `InlineNotice`, `ChoiceRow`, and `SwitchRow` for predictable states and forms.
+
+App screens import React Native primitives from `components/ui/native` so the bundled Clancy font
+is applied consistently to text and text inputs.
 
 Feature-specific reusable components belong in a named feature folder, such as
 `components/course` or `components/society`.

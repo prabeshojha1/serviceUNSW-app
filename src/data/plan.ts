@@ -1,4 +1,10 @@
-import { CatalogCourse, PlanCourse, PlanTerm } from '@/types/plan';
+import {
+  CatalogCourse,
+  DegreeRequirement,
+  PlanCourse,
+  PlanningPreferences,
+  PlanTerm,
+} from '@/types/plan';
 
 export const DEGREE_TOTAL_UOC = 144;
 
@@ -10,81 +16,126 @@ export const planTerms: PlanTerm[] = [
   { id: '2027-t1', label: 'Term 1, 2027', shortLabel: 'T1 2027', year: 'Year 4', capacity: 18 },
 ];
 
+export const degreeRequirements: DegreeRequirement[] = [
+  {
+    id: 'core',
+    label: 'Computer Science core',
+    requiredUoc: 72,
+    description: 'Foundational computing, mathematics, project, and professional-practice courses.',
+  },
+  {
+    id: 'computing-electives',
+    label: 'Computing electives',
+    requiredUoc: 30,
+    description: 'Advanced computing courses used to shape your technical pathway.',
+  },
+  {
+    id: 'general-education',
+    label: 'General education',
+    requiredUoc: 12,
+    description: 'Study outside your primary discipline area.',
+  },
+  {
+    id: 'free-electives',
+    label: 'Free electives',
+    requiredUoc: 30,
+    description: 'Flexible study used to broaden or deepen your degree.',
+  },
+];
+
+export const defaultPlanningPreferences: PlanningPreferences = {
+  careerDirection: 'ai-ml',
+  interests: ['ai', 'data', 'software-engineering'],
+  workload: 'balanced',
+  priorities: ['prerequisites-first', 'practical-experience', 'manage-workload'],
+};
+
 export const catalogCourses: CatalogCourse[] = [
   {
     code: 'COMP3231', title: 'Operating Systems', uoc: 6,
     terms: ['2026-t1', '2026-t3'], prerequisites: ['COMP2521'], interest: 'Systems',
+    interestId: 'systems', requirementId: 'computing-electives',
     description: 'Processes, memory, concurrency, file systems, and the design of modern operating systems.',
   },
   {
     code: 'COMP3311', title: 'Database Systems', uoc: 6,
     terms: ['2026-t1', '2026-t2'], prerequisites: ['COMP2521'], interest: 'Data',
+    interestId: 'data', requirementId: 'computing-electives',
     description: 'Data modelling, relational design, SQL, transactions, and database implementation.',
   },
   {
     code: 'COMP3331', title: 'Computer Networks and Applications', uoc: 6,
     terms: ['2026-t2', '2026-t3'], prerequisites: ['COMP2521'], interest: 'Networks',
+    interestId: 'networks', requirementId: 'computing-electives',
     description: 'Internet architecture, transport protocols, routing, and networked application design.',
   },
   {
     code: 'COMP3411', title: 'Artificial Intelligence', uoc: 6,
     terms: ['2026-t1', '2026-t3'], prerequisites: ['COMP2521', 'MATH1081'], interest: 'AI',
+    interestId: 'ai', requirementId: 'computing-electives',
     description: 'Search, reasoning, planning, machine learning, and intelligent agent design.',
   },
   {
     code: 'COMP3511', title: 'Human Computer Interaction', uoc: 6,
     terms: ['2026-t2'], prerequisites: ['COMP1531'], interest: 'Product design',
+    interestId: 'product-design', requirementId: 'computing-electives',
     description: 'Human-centred research, interaction design, prototyping, and usability evaluation.',
   },
   {
     code: 'COMP3900', title: 'Computer Science Project', uoc: 6,
     terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1531', 'COMP2521'], interest: 'Software engineering',
+    interestId: 'software-engineering', requirementId: 'core',
     description: 'A team-based capstone that applies software engineering practice to a substantial project.',
   },
   {
     code: 'COMP4920', title: 'Professional Issues and Ethics', uoc: 6,
     terms: ['2026-t1', '2026-t2'], prerequisites: [], interest: 'Professional practice',
+    interestId: 'software-engineering', requirementId: 'core',
     description: 'Ethical, legal, social, and professional issues in computing practice.',
   },
   {
     code: 'COMP6080', title: 'Web Front-End Programming', uoc: 6,
     terms: ['2026-t1', '2026-t3'], prerequisites: ['COMP1531'], interest: 'Web development',
+    interestId: 'web', requirementId: 'computing-electives',
     description: 'Modern browser programming, accessibility, interface architecture, and web application quality.',
   },
   {
-    code: 'COMP2521', title: 'Data Structures and Algorithms', uoc: 6, 
+    code: 'COMP2521', title: 'Data Structures and Algorithms', uoc: 6,
     terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1511'], interest: 'Data structures and algorithms',
-    description: 'Common data structures and algorithms used in the industry, help with thought process of a computer scientist.'
+    interestId: 'software-engineering', requirementId: 'core',
+    description: 'Common data structures and algorithms used in industry and computer science practice.',
   },
   {
-    code: 'COMP1511', title: 'Programming Fundamentals', uoc: 6, 
+    code: 'COMP1511', title: 'Programming Fundamentals', uoc: 6,
     terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: [], interest: 'Entry to programming',
-    description: 'Basics of programming, simple logic and data structures.'
+    interestId: 'software-engineering', requirementId: 'core',
+    description: 'Programming fundamentals, simple logic, and introductory data structures.',
   },
   {
-    code: 'COMP1531', title: 'Software Engineering Fundamentals', uoc: 6, 
+    code: 'COMP1531', title: 'Software Engineering Fundamentals', uoc: 6,
     terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1511'], interest: 'Group project',
-    description: 'Work on simple backend with a group to build on fundamentals and teamwork.'
+    interestId: 'software-engineering', requirementId: 'core',
+    description: 'Build a backend project in a team while developing engineering and collaboration skills.',
   },
   {
-    code: 'MATH1081', title: 'Discrete Mathematics', uoc: 6, 
+    code: 'MATH1081', title: 'Discrete Mathematics', uoc: 6,
     terms: ['2026-t1', '2026-t2', '2026-t3'], prerequisites: ['COMP1511'], interest: 'Logic',
-    description: 'Using analytical problem solving and mathematical techniques to solve problems and explain ideas'
+    interestId: 'ai', requirementId: 'core',
+    description: 'Analytical problem solving and mathematical techniques for computer science.',
   },
 ];
 
 export const initialPlanCourses: PlanCourse[] = [
-  { id: 'done-1511', code: 'COMP1511', title: 'Programming Fundamentals', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-1521', code: 'COMP1521', title: 'Computer Systems Fundamentals', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-1531', code: 'COMP1531', title: 'Software Engineering Fundamentals', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-2521', code: 'COMP2521', title: 'Data Structures and Algorithms', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-1081', code: 'MATH1081', title: 'Discrete Mathematics', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-1131', code: 'MATH1131', title: 'Mathematics 1A', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-1231', code: 'MATH1231', title: 'Mathematics 1B', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'done-gen', code: 'GENC3004', title: 'Personal Finance', uoc: 6, status: 'completed', termId: 'completed' },
-  { id: 'plan-3231', code: 'COMP3231', title: 'Operating Systems', uoc: 6, status: 'in-progress', termId: '2026-t1', prerequisites: ['COMP2521'], interest: 'Systems' },
-  { id: 'plan-3311', code: 'COMP3311', title: 'Database Systems', uoc: 6, status: 'planned', termId: '2026-t1', prerequisites: ['COMP2521'], interest: 'Data' },
-  { id: 'plan-3900', code: 'COMP3900', title: 'Computer Science Project', uoc: 6, status: 'planned', termId: '2026-t2', prerequisites: ['COMP1531', 'COMP2521'], interest: 'Software engineering' },
-  { id: 'plan-4920', code: 'COMP4920', title: 'Professional Issues and Ethics', uoc: 6, status: 'planned', termId: '2026-t2', interest: 'Professional practice' },
-  { id: 'plan-3411', code: 'COMP3411', title: 'Artificial Intelligence', uoc: 6, status: 'recommended', termId: '2026-t3', prerequisites: ['COMP2521', 'MATH1081'], interest: 'AI', reason: 'It matches your AI interest and both prerequisites are complete.' },
+  { id: 'done-1511', code: 'COMP1511', title: 'Programming Fundamentals', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-1521', code: 'COMP1521', title: 'Computer Systems Fundamentals', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-1531', code: 'COMP1531', title: 'Software Engineering Fundamentals', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-2521', code: 'COMP2521', title: 'Data Structures and Algorithms', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-1081', code: 'MATH1081', title: 'Discrete Mathematics', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-1131', code: 'MATH1131', title: 'Mathematics 1A', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-1231', code: 'MATH1231', title: 'Mathematics 1B', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'core' },
+  { id: 'done-gen', code: 'GENC3004', title: 'Personal Finance', uoc: 6, status: 'completed', termId: 'completed', requirementId: 'general-education' },
+  { id: 'plan-3231', code: 'COMP3231', title: 'Operating Systems', uoc: 6, status: 'in-progress', termId: '2026-t1', requirementId: 'computing-electives', prerequisites: ['COMP2521'], interest: 'Systems' },
+  { id: 'plan-3311', code: 'COMP3311', title: 'Database Systems', uoc: 6, status: 'planned', termId: '2026-t1', requirementId: 'computing-electives', prerequisites: ['COMP2521'], interest: 'Data' },
+  { id: 'plan-3900', code: 'COMP3900', title: 'Computer Science Project', uoc: 6, status: 'planned', termId: '2026-t2', requirementId: 'core', prerequisites: ['COMP1531', 'COMP2521'], interest: 'Software engineering' },
+  { id: 'plan-4920', code: 'COMP4920', title: 'Professional Issues and Ethics', uoc: 6, status: 'planned', termId: '2026-t2', requirementId: 'core', interest: 'Professional practice' },
 ];

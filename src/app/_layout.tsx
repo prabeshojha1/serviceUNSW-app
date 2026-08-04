@@ -1,7 +1,10 @@
 import '../global.css';
 
+import { useFonts } from 'expo-font';
 import { DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 
 import { PlanProvider } from '@/context/plan-context';
 import { colors } from '@/theme/tokens';
@@ -19,7 +22,19 @@ const appTheme = {
   },
 };
 
+void SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts({
+    Clancy: require('../../assets/Clancy-Free.otf'),
+  });
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) void SplashScreen.hideAsync();
+  }, [fontError, fontsLoaded]);
+
+  if (!fontsLoaded && !fontError) return null;
+
   return (
     <ThemeProvider value={appTheme}>
       <PlanProvider>

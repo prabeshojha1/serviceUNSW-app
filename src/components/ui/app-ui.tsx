@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ReactNode } from 'react';
+import { ReactNode, RefObject, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Animated,
   Modal,
   Pressable,
   ScrollView,
@@ -12,7 +13,7 @@ import {
   TextInputProps,
   useWindowDimensions,
   View,
-} from 'react-native';
+} from '@/components/ui/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { colors, layout } from '@/theme/tokens';
@@ -29,6 +30,7 @@ type AppScreenProps = {
   scroll?: boolean;
   showProfile?: boolean;
   contentClassName?: string;
+  scrollViewRef?: RefObject<ScrollView | null>;
 };
 
 export function AppScreen({
@@ -40,6 +42,7 @@ export function AppScreen({
   scroll = true,
   showProfile = !back,
   contentClassName = '',
+  scrollViewRef,
 }: AppScreenProps) {
   const header = (
     <View className="border-b border-border bg-surface">
@@ -87,6 +90,7 @@ export function AppScreen({
       {header}
       {scroll ? (
         <ScrollView
+          ref={scrollViewRef}
           className="flex-1"
           contentContainerClassName={`${bodyClassName} grow pb-10`}
           keyboardShouldPersistTaps="handled"
@@ -306,10 +310,11 @@ export function Chip({
   );
 }
 
-type BadgeTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger' | 'ai';
+type BadgeTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger' | 'ai';
 
 const badgeClasses: Record<BadgeTone, string> = {
   neutral: 'bg-surface-muted text-muted',
+  brand: 'bg-brand text-ink',
   info: 'bg-info-soft text-info',
   success: 'bg-success-soft text-success',
   warning: 'bg-warning-soft text-warning',
@@ -329,7 +334,6 @@ const statusConfig: Record<CourseStatus, { label: string; tone: BadgeTone }> = {
   completed: { label: 'Completed', tone: 'success' },
   'in-progress': { label: 'In progress', tone: 'info' },
   planned: { label: 'Planned', tone: 'warning' },
-  recommended: { label: 'Recommended', tone: 'ai' },
   failed: { label: 'Needs retry', tone: 'danger' },
 };
 
@@ -387,6 +391,7 @@ export function ModalSheet({
   description,
   children,
   footer,
+  presentation = 'dialog',
 }: {
   visible: boolean;
   onClose: () => void;
@@ -394,43 +399,97 @@ export function ModalSheet({
   description?: string;
   children: ReactNode;
   footer?: ReactNode;
+  presentation?: 'dialog' | 'responsive-drawer';
 }) {
   const { width } = useWindowDimensions();
   const desktop = width >= layout.desktopNavigationBreakpoint;
+  const drawer = presentation === 'responsive-drawer' && desktop;
+  const [slideProgress] = useState(() => new Animated.Value(1));
+
+  useEffect(() => {
+    if (!visible || presentation !== 'responsive-drawer') return;
+    slideProgress.setValue(1);
+    Animated.timing(slideProgress, {
+      duration: 240,
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  }, [presentation, slideProgress, visible]);
+
+  const slideStyle =
+    presentation === 'responsive-drawer'
+      ? {
+          transform: [
+            drawer
+              ? {
+                  translateX: slideProgress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, Math.min(width, 576)],
+                  }),
+                }
+              : {
+                  translateY: slideProgress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 720],
+                  }),
+                },
+          ],
+        }
+      : undefined;
+  const panelStyle = {
+    backgroundColor: colors.canvas,
+    borderColor: colors.border,
+    borderWidth: drawer ? 0 : 1,
+    borderLeftWidth: 1,
+    borderBottomLeftRadius: drawer || desktop ? 24 : 0,
+    borderBottomRightRadius: desktop && !drawer ? 24 : 0,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: drawer ? 0 : 24,
+    height: drawer ? ('100%' as const) : undefined,
+    maxWidth: 576,
+    overflow: 'hidden' as const,
+    width: '100%' as const,
+  };
 
   return (
     <Modal
-      animationType={desktop ? 'fade' : 'slide'}
+      animationType={presentation === 'responsive-drawer' ? 'fade' : desktop ? 'fade' : 'slide'}
       onRequestClose={onClose}
       transparent
       visible={visible}>
       <Pressable
         accessibilityLabel="Close dialog"
-        className={`flex-1 bg-black/50 p-4 ${desktop ? 'items-center justify-center' : 'justify-end'}`}
+        className={`flex-1 bg-black/50 ${
+          drawer ? 'items-end justify-center' : desktop ? 'items-center justify-center p-4' : 'justify-end p-4'
+        }`}
         onPress={onClose}>
-        <Pressable
-          accessibilityRole="none"
+        <Animated.View
           className={`w-full max-w-xl overflow-hidden border border-border bg-canvas ${
-            desktop ? 'rounded-panel' : 'rounded-t-panel'
+            drawer ? 'h-full rounded-l-panel border-y-0 border-r-0' : desktop ? 'rounded-panel' : 'rounded-t-panel'
           }`}
-          onPress={(event) => event.stopPropagation()}>
-          <View className="flex-row items-start gap-4 border-b border-border bg-surface px-5 py-4">
-            <View className="min-w-0 flex-1">
-              <Text className="text-xl font-extrabold text-ink">{title}</Text>
-              {description ? (
-                <Text className="mt-1 text-sm leading-5 text-muted">{description}</Text>
-              ) : null}
+          style={[panelStyle, slideStyle]}>
+          <Pressable
+            accessibilityRole="none"
+            className={`${drawer ? 'flex-1' : ''} bg-canvas`}
+            onPress={(event) => event.stopPropagation()}>
+            <View className="flex-row items-start gap-4 border-b border-border bg-surface px-5 py-4">
+              <View className="min-w-0 flex-1">
+                <Text className="text-xl font-extrabold text-ink">{title}</Text>
+                {description ? (
+                  <Text className="mt-1 text-sm leading-5 text-muted">{description}</Text>
+                ) : null}
+              </View>
+              <IconButton accessibilityLabel="Close" icon="close" onPress={onClose} />
             </View>
-            <IconButton accessibilityLabel="Close" icon="close" onPress={onClose} />
-          </View>
-          <ScrollView
-            className="max-h-[65vh]"
-            contentContainerClassName="gap-4 p-5"
-            keyboardShouldPersistTaps="handled">
-            {children}
-          </ScrollView>
-          {footer ? <View className="border-t border-border bg-surface p-4">{footer}</View> : null}
-        </Pressable>
+            <ScrollView
+              className={`${drawer ? 'flex-1' : 'max-h-[65vh]'} bg-canvas`}
+              contentContainerClassName="gap-4 p-5"
+              keyboardShouldPersistTaps="handled">
+              {children}
+            </ScrollView>
+            {footer ? <View className="border-t border-border bg-surface p-4">{footer}</View> : null}
+          </Pressable>
+        </Animated.View>
       </Pressable>
     </Modal>
   );

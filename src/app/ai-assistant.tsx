@@ -6,8 +6,8 @@ export default function AssistantRedirect() {
     <Redirect
       href={
         {
-          pathname: '/my-plan/assistant',
-          params: course ? { course } : {},
+          pathname: '/my-plan',
+          params: { assistant: '1', ...(course ? { course } : {}) },
         } as Href
       }
     />

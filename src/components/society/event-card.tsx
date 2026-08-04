@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from '@/components/ui/native';
 
 import { colors } from '@/theme/tokens';
 import { SocietyEvent } from '@/types/society';

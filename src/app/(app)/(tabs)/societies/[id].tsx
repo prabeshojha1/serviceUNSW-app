@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Text, View } from 'react-native';
+import { Text, View } from '@/components/ui/native';
 
 import { SocietyEventCard } from '@/components/society/event-card';
 import {

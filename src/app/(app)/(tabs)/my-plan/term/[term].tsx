@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Text, View } from 'react-native';
+import { Text, View } from '@/components/ui/native';
 
 import {
   AppScreen,
@@ -141,7 +141,9 @@ export default function TermScreen() {
             action={
               <Button
                 label="Check with AI"
-                onPress={() => router.push('/my-plan/assistant')}
+                onPress={() =>
+                  router.push({ pathname: '/my-plan', params: { assistant: '1' } })
+                }
                 size="sm"
                 variant="ai"
               />

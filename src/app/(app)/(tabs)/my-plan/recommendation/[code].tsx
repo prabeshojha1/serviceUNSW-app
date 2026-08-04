@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Text, View } from 'react-native';
+import { Text, View } from '@/components/ui/native';
 
 import {
   AppScreen,
@@ -125,8 +125,8 @@ export default function RecommendationScreen() {
             label="Ask a follow-up"
             onPress={() =>
               router.push({
-                pathname: '/my-plan/assistant',
-                params: { course: course.code },
+                pathname: '/my-plan',
+                params: { assistant: '1', course: course.code },
               })
             }
             variant="ai"

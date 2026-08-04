@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { useWindowDimensions } from 'react-native';
+import { appFontFamily, useWindowDimensions } from '@/components/ui/native';
 
 import { colors, layout } from '@/theme/tokens';
 
@@ -41,6 +41,7 @@ export default function TabLayout() {
           : { borderRadius: 12, marginHorizontal: 3, marginVertical: 5 },
         tabBarLabelPosition: desktop ? 'beside-icon' : 'below-icon',
         tabBarLabelStyle: {
+          fontFamily: appFontFamily,
           fontSize: desktop ? 15 : 11,
           fontWeight: '700',
         },

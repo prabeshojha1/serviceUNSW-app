@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { View } from 'react-native';
+import { View } from '@/components/ui/native';
 
 import { SocietyEventCard } from '@/components/society/event-card';
 import {

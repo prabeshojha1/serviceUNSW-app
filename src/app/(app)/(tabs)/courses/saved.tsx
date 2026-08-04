@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { View } from 'react-native';
+import { View } from '@/components/ui/native';
 
 import { CourseListCard } from '@/components/course/course-list-card';
 import { AppScreen, Button, EmptyState, SectionHeader } from '@/components/ui/app-ui';

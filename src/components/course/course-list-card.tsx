@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from '@/components/ui/native';
 
 import { Badge, Button, IconButton } from '@/components/ui/app-ui';
 import { colors } from '@/theme/tokens';

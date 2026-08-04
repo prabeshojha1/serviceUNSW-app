@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from '@/components/ui/native';
 
 import { CourseListCard } from '@/components/course/course-list-card';
 import {
@@ -99,7 +99,9 @@ export default function CoursesScreen() {
           <ToolCard
             icon="sparkles-outline"
             label="Ask about courses"
-            onPress={() => router.push('/my-plan/assistant')}
+            onPress={() =>
+              router.push({ pathname: '/my-plan', params: { assistant: '1' } })
+            }
             tone="ai"
           />
         </View>
